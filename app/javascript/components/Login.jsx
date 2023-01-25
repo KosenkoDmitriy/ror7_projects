@@ -14,19 +14,49 @@ import {
 from 'mdb-react-ui-kit';
 
 function App() {
+  const [signupForm, setSignupForm] = useState({
+    email: '',
+    password: '',
+    confirm: '',
+    isAgree: false
+  });
+
+  const [loginForm, setLoginForm] = useState({
+    email: '',
+    password: '',
+    isRemember: false
+  });
 
   const [justifyActive, setJustifyActive] = useState('tab1');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirm, setConfirm] = useState('');
 
   const handleJustifyClick = (value) => {
     if (value === justifyActive) {
       return;
     }
-
     setJustifyActive(value);
   };
+
+  const onSubmitSignupForm = (e) => {
+    if (e) e.preventDefault();
+    console.log(JSON.stringify(signupForm, null, 1));
+  };
+  
+  const onSubmitLoginForm = (e) => {
+    if (e) e.preventDefault();
+    console.log(JSON.stringify(loginForm, null, 1));
+  };
+
+  const onUpdateSignupField = (e) => {
+    if (e) e.preventDefault();
+    const formNew = { ...signupForm, [e.target.name]: e.target.value }
+    setSignupForm(formNew)
+  }
+
+  const onUpdateLoginField = (e) => {
+    if (e) e.preventDefault();
+    const formNew = { ...loginForm, [e.target.name]: e.target.value }
+    setLoginForm(formNew)
+  }
 
   return (
     <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
@@ -51,13 +81,14 @@ function App() {
           <div className="text-center mb-3">
             <p>Sign in with:</p>
           </div>
+          <form onSubmit={onSubmitLoginForm}>
 
-          <MDBInput wrapperClass='mb-4' label='Email address' id='email' type='email' onChange={(e) => {setEmail(e.target.value)}}
+          <MDBInput wrapperClass='mb-4' label='Email address' name='email' type='email' onChange={onUpdateLoginField}
           />
-          <MDBInput wrapperClass='mb-4' label='Password' id='password' type='password' onChange={(e) => {setPassword(e.target.value)}}/>
+          <MDBInput wrapperClass='mb-4' label='Password' name='password' type='password' onChange={onUpdateLoginField}/>
 
           <MDBBtn className="mb-4 w-100">Sign in</MDBBtn>
-
+          </form>
         </MDBTabsPane>
 
         <MDBTabsPane show={justifyActive === 'tab2'}>
@@ -65,17 +96,17 @@ function App() {
           <div className="text-center mb-3">
             <p>Sign up with:</p>
           </div>
-
-          <MDBInput wrapperClass='mb-4' label='Email' id='email' type='email' onChange={(e) => {setEmail(e.target.value)}}/>
-          <MDBInput wrapperClass='mb-4' label='Password' id='password' type='password' onChange={(e) => {setPassword(e.target.value)}}/>
-          <MDBInput wrapperClass='mb-4' label='Re-enter' id='confirm' type='password' onChange={(e) => {setConfirm(e.target.value)}}/>
+          <form onSubmit={(e) => {onSubmitSignupForm(e)}}>
+          <MDBInput wrapperClass='mb-4' label='Email' name='email' type='email' onChange={onUpdateSignupField}/>
+          <MDBInput wrapperClass='mb-4' label='Password' name='password' type='password' onChange={onUpdateSignupField}/>
+          <MDBInput wrapperClass='mb-4' label='Re-enter' name='confirm' type='password' onChange={onUpdateSignupField}/>
 
           <div className='d-flex justify-content-center mb-4'>
             <MDBCheckbox name='flexCheck' id='flexCheckDefault' label='I have read and agree to the terms' />
           </div>
 
-          <MDBBtn className="mb-4 w-100">Sign up</MDBBtn>
-
+          <MDBBtn type="submit" className="mb-4 w-100">Sign up</MDBBtn>
+          </form>
         </MDBTabsPane>
 
       </MDBTabsContent>
