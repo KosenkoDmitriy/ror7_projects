@@ -21,11 +21,19 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
+# development:
+#   <<: *default
+#   database: issuetracker_development
+#   username: ubuntu
+#   password: 123456
+#   #host: pghost
+
 development:
-  <<: *default
-  database: issuetracker_development
-  username: ubuntu
-  password: 123456
+  database: db/development.sqlite3
+  adapter: sqlite3
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.

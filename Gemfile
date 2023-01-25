@@ -30,7 +30,9 @@ group :development do
   # gem "spring"
 end
 
-
 gem "devise", "~> 4.8"
-
 gem "jsonapi-serializer", "~> 2.2"
+
+group :development do
+  gem "sqlite3", "~> 1.6.0"
+end
