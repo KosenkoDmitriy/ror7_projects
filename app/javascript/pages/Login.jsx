@@ -13,7 +13,7 @@ import {
 }
 from 'mdb-react-ui-kit';
 import { Navigate, Link } from "react-router-dom";
-import { userLogin } from '../actions/userAction';
+import { userLogin, userSignup } from '../actions/userAction';
 
 function App() {
   const [error, setError] = useState('')
@@ -41,26 +41,37 @@ function App() {
     setJustifyActive(value);
   };
 
-  const onSubmitSignupForm = (e) => {
+  const onSubmitSignupForm = async (e) => {
     if (e) e.preventDefault();
-    setError('')
-    setMessage('')
-    console.log(JSON.stringify(signupForm, null, 1));
+    // console.log(JSON.stringify(signupForm, null, 1));
+    notificationHide();
+    const response = await userSignup(signupForm);
+    notificationShow(response)
   };
   
   const onSubmitLoginForm = async (e) => {
     if (e) e.preventDefault();
-    setError('')
-    setMessage('')
+    notificationHide();
     const json_data = JSON.stringify(loginForm, null, 1);
     const response = await userLogin(json_data);
-    if (response.ok) 
+    notificationShow(response)
+  };
+
+  function notificationHide() {
+    setError('');
+    setMessage('');
+  }
+
+  function notificationShow(response) {
+    if (response.ok || response.status.code == (200 || 201)) 
       setIsLoggedIn(true)
     else {
-      setError(response.error)
+      //todo: validation for each form input {"errors":{"email":["has already been taken"]}}
+      const message = response.error;//|| response.errors.reduce((prev,item)=>prev+item)
+      setError(message)
       setIsLoggedIn(false);
     }
-  };
+  }
 
   const onUpdateSignupField = (e) => {
     if (e) e.preventDefault();
