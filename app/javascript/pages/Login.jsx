@@ -12,9 +12,13 @@ import {
   MDBCheckbox
 }
 from 'mdb-react-ui-kit';
-import { Redirect, Link } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
+import { userLogin } from '../actions/userAction';
 
 function App() {
+  const [error, setError] = useState('')
+  const [message, setMessage] = useState('')
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [signupForm, setSignupForm] = useState({
     email: '',
     password: '',
@@ -39,12 +43,23 @@ function App() {
 
   const onSubmitSignupForm = (e) => {
     if (e) e.preventDefault();
+    setError('')
+    setMessage('')
     console.log(JSON.stringify(signupForm, null, 1));
   };
   
-  const onSubmitLoginForm = (e) => {
+  const onSubmitLoginForm = async (e) => {
     if (e) e.preventDefault();
-    console.log(JSON.stringify(loginForm, null, 1));
+    setError('')
+    setMessage('')
+    const json_data = JSON.stringify(loginForm, null, 1);
+    const response = await userLogin(json_data);
+    if (response.ok) 
+      setIsLoggedIn(true)
+    else {
+      setError(response.error)
+      setIsLoggedIn(false);
+    }
   };
 
   const onUpdateSignupField = (e) => {
@@ -59,9 +74,11 @@ function App() {
     setLoginForm(formNew)
   }
 
+  if (isLoggedIn) return <Navigate to='/projects' replace={true} />
   return (
     <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
       <Link to='/projects'>Projects</Link>
+      
       <MDBTabs pills justify className='mb-3 d-flex flex-row justify-content-between'>
         <MDBTabsItem>
           <MDBTabsLink onClick={() => handleJustifyClick('tab1')} active={justifyActive === 'tab1'}>
@@ -74,6 +91,9 @@ function App() {
           </MDBTabsLink>
         </MDBTabsItem>
       </MDBTabs>
+
+      <div className="error">{ error }</div>
+      <div className="message">{ message }</div>
 
       <MDBTabsContent>
 
