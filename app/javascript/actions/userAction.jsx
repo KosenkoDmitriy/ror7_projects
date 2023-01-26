@@ -35,8 +35,8 @@ const userSignup = async (form_data) => {
 }
 
 const userLogout = async (form_data) => {
-  console.log('userLogout', form_data);
-  const json_data = JSON.stringify({sign_in: form_data});
+  // console.log('userLogout', form_data);
+  // const json_data = JSON.stringify({sign_in: form_data});
   const requestOptions = {
     method: 'DELETE',
     credentials: 'same-origin',
@@ -45,7 +45,7 @@ const userLogout = async (form_data) => {
       'Content-Type': 'application/json',
       'X-CSRF-Token': document.querySelector("meta[name='csrf-token']").getAttribute("content"),
     },
-    body: json_data
+    // body: json_data
   };
 
   const res = await fetch("/logout", requestOptions).then(response => response.json())
