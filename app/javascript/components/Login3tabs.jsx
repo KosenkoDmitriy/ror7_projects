@@ -12,6 +12,7 @@ import {
   MDBCheckbox
 }
 from 'mdb-react-ui-kit';
+import { Link } from "react-router-dom";
 
 function App() {
   const [signupForm, setSignupForm] = useState({
@@ -60,8 +61,12 @@ function App() {
 
   return (
     <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
-
       <MDBTabs pills justify className='mb-3 d-flex flex-row justify-content-between'>
+        <MDBTabsItem>
+          <MDBTabsLink onClick={() => handleJustifyClick('tab3')} active={justifyActive === 'tab3'}>
+            Projects 
+          </MDBTabsLink>
+        </MDBTabsItem>
         <MDBTabsItem>
           <MDBTabsLink onClick={() => handleJustifyClick('tab1')} active={justifyActive === 'tab1'}>
             Login
@@ -107,6 +112,14 @@ function App() {
 
           <MDBBtn type="submit" className="mb-4 w-100">Sign up</MDBBtn>
           </form>
+        </MDBTabsPane>
+
+        <MDBTabsPane show={justifyActive === 'tab3'}>
+
+          <div className="text-center mb-3">
+            <p>Projects:</p>
+          </div>
+           
         </MDBTabsPane>
 
       </MDBTabsContent>
