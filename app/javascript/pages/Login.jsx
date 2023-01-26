@@ -52,8 +52,7 @@ function App() {
   const onSubmitLoginForm = async (e) => {
     if (e) e.preventDefault();
     notificationHide();
-    const json_data = JSON.stringify(loginForm, null, 1);
-    const response = await userLogin(json_data);
+    const response = await userLogin(loginForm);
     notificationShow(response)
   };
 
