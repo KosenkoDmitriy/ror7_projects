@@ -22,8 +22,8 @@ function App() {
   const [signupForm, setSignupForm] = useState({
     email: '',
     password: '',
-    confirm: '',
-    isAgree: false
+    password_confirmation: '',
+    // isAgree: false
   });
 
   const [loginForm, setLoginForm] = useState({
@@ -63,12 +63,12 @@ function App() {
   }
 
   function notificationShow(response) {
-    if (response.ok || response.status.code == (200 || 201)) 
-      setIsLoggedIn(true)
-    else {
-      //todo: validation for each form input {"errors":{"email":["has already been taken"]}}
-      const message = response.error;//|| response.errors.reduce((prev,item)=>prev+item)
-      setError(message)
+    if (response.ok || response.status.code == (200 || 201)) {
+      setMessage(response.status.message);
+      setIsLoggedIn(true);
+    } else {
+      const message = response.error || response.status.message;
+      setError(message);
       setIsLoggedIn(false);
     }
   }
@@ -131,7 +131,7 @@ function App() {
           <form onSubmit={(e) => {onSubmitSignupForm(e)}}>
           <MDBInput wrapperClass='mb-4' label='Email' name='email' type='email' onChange={onUpdateSignupField}/>
           <MDBInput wrapperClass='mb-4' label='Password' name='password' type='password' onChange={onUpdateSignupField}/>
-          <MDBInput wrapperClass='mb-4' label='Re-enter' name='confirm' type='password' onChange={onUpdateSignupField}/>
+          <MDBInput wrapperClass='mb-4' label='Re-enter' name='password_confirmation' type='password' onChange={onUpdateSignupField}/>
 
           <div className='d-flex justify-content-center mb-4'>
             <MDBCheckbox name='flexCheck' id='flexCheckDefault' label='I have read and agree to the terms' />
