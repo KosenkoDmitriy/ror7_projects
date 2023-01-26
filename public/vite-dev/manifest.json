@@ -32,7 +32,7 @@
     "src": "../../node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf"
   },
   "entrypoints/index.jsx": {
-    "file": "assets/index.c99b6996.js",
+    "file": "assets/index.05d68741.js",
     "src": "entrypoints/index.jsx",
     "isEntry": true,
     "css": [

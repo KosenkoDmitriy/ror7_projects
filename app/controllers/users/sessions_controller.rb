@@ -7,10 +7,10 @@ class Users::SessionsController < Devise::SessionsController
   before_action :configure_sign_in_params, only: [:create]
   
   # GET /resource/sign_in
-  def new
-    super
-  end
-
+  # def new
+  #   super
+  # end
+  
   # POST /resource/sign_in
   def create
     super
@@ -24,10 +24,17 @@ class Users::SessionsController < Devise::SessionsController
   private
   
   def respond_with(resource, _opts = {})
-    render json: {
-      status: {code: 200, message: 'Logged in successfully.'},
-      data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
-    }, status: :ok
+    if resource.present?
+      render json: {
+        status: {code: 200, message: 'Logged in successfully.'},
+        data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
+      }, status: :ok
+    else
+      render json: {
+        status: 401,
+        message: "You need to sign in or sign up before continuing."
+      }, status: :unauthorized
+    end
   end
 
   def respond_to_on_destroy
