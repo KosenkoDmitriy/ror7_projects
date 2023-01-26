@@ -62,10 +62,10 @@ function App() {
   }
 
   function notificationShow(response) {
-    if (response.ok || response.status.code == (200 || 201)) {
+    if (response.ok || response.status && response.status.code == (200 || 201)) {
       setMessage(response.status.message);
       setIsLoggedIn(true);
-    } else {
+    } else if (response.error || response.status && response.status.code == 401) {
       const message = response.error || response.status.message;
       setError(message);
       setIsLoggedIn(false);
