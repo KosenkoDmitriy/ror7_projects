@@ -6,11 +6,13 @@ Rails.application.routes.draw do
   },
   controllers: {
     sessions: 'users/sessions',
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    projects: 'projects'
   }
 
   root 'homes#index' 
-
+  resources :projects
+  
   # namespace :api do
   #   namespace :v1 do
   #     resources :sounds, only: [:index]
