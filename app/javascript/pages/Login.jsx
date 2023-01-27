@@ -13,9 +13,10 @@ import {
 }
 from 'mdb-react-ui-kit';
 import { Navigate, Link } from "react-router-dom";
-import { userLogin, userSignup } from '../actions/userAction';
+import { userLogin, userSignup, userLogout } from '../actions/userAction';
 
 function App() {
+  const [userId, setUserId] = useState(0);
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -53,6 +54,7 @@ function App() {
     if (e) e.preventDefault();
     notificationHide();
     const response = await userLogin(loginForm);
+    setUserId(response.data.id)
     notificationShow(response)
   };
 
@@ -63,7 +65,7 @@ function App() {
 
   function notificationShow(response) {
     if (response.ok || response.status && response.status.code == (200 || 201)) {
-      setMessage(response.status.message);
+      setMessage(response.message || response.status.message);
       setIsLoggedIn(true);
     } else if (response.error || response.status && response.status.code == 401) {
       const message = response.error || response.status.message;
@@ -84,7 +86,20 @@ function App() {
     setLoginForm(formNew)
   }
 
-  if (isLoggedIn) return <Navigate to='/projects' replace={true} />
+  
+  const onLogout = async (e) => {
+    if (e) e.preventDefault();
+    notificationHide();
+    const response = await userLogout(userId);
+    notificationShow(response)
+    if (response.status.ok)
+      setIsLoggedIn(false)
+    else
+      setIsLoggedIn(true)
+  };
+
+
+  // if (isLoggedIn) return <Navigate to='/projects' replace={true} />
   return (
     <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
       <Link to='/projects'>Projects</Link>
@@ -98,6 +113,11 @@ function App() {
         <MDBTabsItem>
           <MDBTabsLink onClick={() => handleJustifyClick('tab2')} active={justifyActive === 'tab2'}>
             Register
+          </MDBTabsLink>
+        </MDBTabsItem>
+        <MDBTabsItem>
+          <MDBTabsLink onClick={() => onLogout()} active={isLoggedIn}>
+            Logout
           </MDBTabsLink>
         </MDBTabsItem>
       </MDBTabs>

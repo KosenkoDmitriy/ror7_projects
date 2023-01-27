@@ -25,7 +25,7 @@ const Projects = () => {
       setIsLoggedIn(true)
   };
 
-  if (!isLoggedIn) return <Navigate to='/login' replace={true} />
+  // if (!isLoggedIn) return <Navigate to='/login' replace={true} />
 
   return (
     <MDBContainer className="p-3 my-5 d-flex flex-column w-50">

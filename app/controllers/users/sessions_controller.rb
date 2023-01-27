@@ -5,6 +5,7 @@ class Users::SessionsController < Devise::SessionsController
   #sessions_controller.rb
 
   before_action :configure_sign_in_params, only: [:create]
+  before_action :configure_sign_out_params, only: [:destroy]
   
   # GET /resource/sign_in
   def new
@@ -18,7 +19,11 @@ class Users::SessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
   def destroy
-    super
+    # super
+    current_user = resource = User.find(configure_sign_out_params[:id])
+    # signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+
+    respond_to_on_destroy
   end
 
   private
@@ -40,13 +45,13 @@ class Users::SessionsController < Devise::SessionsController
   def respond_to_on_destroy
     if current_user
       render json: {
-        status: 200,
-        message: 'logged out successfully'
+        status: { code: 200,
+        message: 'Logged out successfully' }
       }, status: :ok
     else
       render json: {
-        status: 401,
-        message: "Couldn't find an active session."
+        status: { code: 401,
+        message: "Couldn't find an active session." }
       }, status: :unauthorized
     end
   end
@@ -56,5 +61,10 @@ class Users::SessionsController < Devise::SessionsController
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_in_params
     devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
+  end
+
+  def configure_sign_out_params
+    # devise_parameter_sanitizer.permit(:user, keys: [:attribute, :id])
+    params.require(:user).permit(:id)
   end
 end

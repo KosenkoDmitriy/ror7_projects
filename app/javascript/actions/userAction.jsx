@@ -12,7 +12,7 @@ const userLogin = async (form_data) => {
     body: json_data
   };
 
-  const res = await fetch("/login", requestOptions).then(response => response.json())
+  const res = await fetch("/sign_in", requestOptions).then(response => response.json())
   return res;
 }
 
@@ -34,9 +34,10 @@ const userSignup = async (form_data) => {
   return res;
 }
 
-const userLogout = async (form_data) => {
-  // console.log('userLogout', form_data);
-  // const json_data = JSON.stringify({sign_in: form_data});
+const userLogout = async (userId) => {
+  const json_data = JSON.stringify({user: {id: userId }});
+  console.log('userLogout', json_data);
+
   const requestOptions = {
     method: 'DELETE',
     credentials: 'same-origin',
@@ -45,10 +46,10 @@ const userLogout = async (form_data) => {
       'Content-Type': 'application/json',
       'X-CSRF-Token': document.querySelector("meta[name='csrf-token']").getAttribute("content"),
     },
-    // body: json_data
+    body: json_data
   };
 
-  const res = await fetch("/logout", requestOptions).then(response => response.json())
+  const res = await fetch("/sign_out", requestOptions).then(response => response.json())
   return res;
 }
 export { userLogin, userSignup, userLogout };
