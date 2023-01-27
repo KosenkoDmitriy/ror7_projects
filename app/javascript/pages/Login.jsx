@@ -73,6 +73,8 @@ function App() {
       const message = response.error || response.status.message;
       setError(message);
       setIsLoggedIn(false);
+    } else {
+      setError(response.error || response.status.message);
     }
   }
 
