@@ -23,16 +23,16 @@
     "file": "assets/fa-brands-400.b1d1c1b0.ttf",
     "src": "../../node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.ttf"
   },
-  "../../node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.ttf": {
-    "file": "assets/fa-v4compatibility.2ddb3b41.ttf",
-    "src": "../../node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.ttf"
-  },
   "../../node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf": {
     "file": "assets/fa-solid-900.e4f6a7e9.ttf",
     "src": "../../node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf"
   },
+  "../../node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.ttf": {
+    "file": "assets/fa-v4compatibility.2ddb3b41.ttf",
+    "src": "../../node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.ttf"
+  },
   "entrypoints/index.jsx": {
-    "file": "assets/index.1946c926.js",
+    "file": "assets/index.1f7e81f1.js",
     "src": "entrypoints/index.jsx",
     "isEntry": true,
     "css": [
