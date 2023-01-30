@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
     respond_to :json
+    protect_from_forgery with: :null_session
+
     rescue_from ActionController::ParameterMissing, with: :bad_request
     rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
