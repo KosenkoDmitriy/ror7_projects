@@ -1,5 +1,4 @@
 const userLogin = async (form_data) => {
-  console.log('userLogin', form_data);
   const json_data = JSON.stringify({user: form_data});
   const requestOptions = {
     method: 'POST',
@@ -17,7 +16,6 @@ const userLogin = async (form_data) => {
 }
 
 const userSignup = async (form_data) => {
-  console.log('userSignup', form_data);
   const json_data = JSON.stringify({user: form_data});
   const requestOptions = {
     method: 'POST',
@@ -36,7 +34,6 @@ const userSignup = async (form_data) => {
 
 const userLogout = async (userId) => {
   const json_data = JSON.stringify({user: {id: userId }});
-  console.log('userLogout', json_data);
 
   const requestOptions = {
     method: 'DELETE',

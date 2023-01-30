@@ -19,7 +19,6 @@ const projectDelete = async (projectId) => {
 }
 
 const projectCreate = async (form_data) => {
-  console.log('projectCreate', form_data);
   const json_data = JSON.stringify({project: form_data});
   const requestOptions = {
     method: 'POST',
@@ -41,10 +40,7 @@ const projectView = async (projectId) => {
 }
 
 const projectUpdate = async (form_data) => {
-  console.log('projectUpdate', form_data);
   const json_data = JSON.stringify({project: form_data});
-  // const json_data = JSON.stringify({project: { id: project.id, title: project.title }});
-
   const requestOptions = {
     method: 'PATCH', //'PUT'
     credentials: 'same-origin',

@@ -16,13 +16,23 @@ import {
 }
 from 'mdb-react-ui-kit';
 import { projectCreate, projectDelete, projectUpdate } from '../actions/projectAction';
+import Message from '../components/Message';
 
 const Projects = () => {
-  const [basicModal, setBasicModal] = useState(false);
-  const toggleShow = () => setBasicModal(!basicModal);
+  const [error, setError] = useState('')
+  const [message, setMessage] = useState('')
+
+  const [createModal, setCreateModal] = useState(false);
+  const toggleShow = () => {
+    setCreateModal(!createModal);
+    notificationHide();
+  }
 
   const [editModal, setEditModal] = useState(false);
-  const toggleEdit = () => setEditModal(!editModal);
+  const toggleEdit = () => {
+    setEditModal(!editModal);
+    notificationHide();
+  }
 
   const [projectForm, setProjectForm] = useState({
     title: ''
@@ -47,10 +57,11 @@ const Projects = () => {
     if (e) e.preventDefault();
     const response = await projectCreate(projectForm);
     if (response.status.code == 200) {
-      // response.status.message
-      // response.data.title
-      setBasicModal(!basicModal);
+      setMessage(response.status.message);
+      // setCreateModal(!createModal);
       setProjects([...projects, response.data]);
+    } else {
+      setError(response.status.message);
     }
   }
 
@@ -70,9 +81,10 @@ const Projects = () => {
     if (e) e.preventDefault();
     const response = await projectDelete(id);
     if (response.status.code == 200) {
-      // response.status.message
-      // response.data.title
+      setMessage(response.status.message);
       setProjects(projects.filter((item) => item.id != id));
+    } else {
+      setError(response.status.message);
     }
   }
 
@@ -86,19 +98,26 @@ const Projects = () => {
     if (e) e.preventDefault();
     const response = await projectUpdate(projectToEdit);
     if (response.status.code == 200) {
-      // response.status.message
-      // response.data.title
+      setMessage(response.status.message);
       setProjects(projects.map((item) => item.id == response.data.id ? response.data : item));
+    } else {
+      setError(response.status.message);
     }
   }
 
+  function notificationHide() {
+    setError('');
+    setMessage('');
+  }
+
   return (
-    <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
-      <MDBBtn onClick={toggleShow}>Add new project</MDBBtn>
-      <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
+    <MDBContainer className="p-1 my-0 d-flex flex-column w-100">
+      <MDBBtn className='w-50' onClick={toggleShow}>Add new project</MDBBtn>
+      <MDBModal show={createModal} setShow={setCreateModal} tabIndex='-1'>
         <MDBModalDialog>
           <MDBModalContent>
           <form onSubmit={(e) => {onProjectCreateBtnClick(e)}}>
+            <Message error={error} message={message} />
 
             <MDBModalHeader>
               <MDBModalTitle>Modal title</MDBModalTitle>
@@ -106,6 +125,7 @@ const Projects = () => {
             </MDBModalHeader>
 
             <MDBModalBody>
+              
               <MDBInput wrapperClass='mb-4' label='Project name' name='title' onChange={onChangeInputOfProjectCreateForm}/>
             </MDBModalBody>
 
@@ -132,6 +152,8 @@ const Projects = () => {
             </MDBModalHeader>
 
             <MDBModalBody>
+              <Message error={error} message={message} />
+
               <MDBInput wrapperClass='mb-4' label='Project name' 
               name='title' 
               value={projectToEdit.title} 

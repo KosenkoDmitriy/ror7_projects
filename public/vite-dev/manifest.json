@@ -32,7 +32,7 @@
     "src": "../../node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.ttf"
   },
   "entrypoints/index.jsx": {
-    "file": "assets/index.4f0a63f6.js",
+    "file": "assets/index.1ff7106b.js",
     "src": "entrypoints/index.jsx",
     "isEntry": true,
     "css": [

@@ -12,14 +12,15 @@ import {
   MDBCheckbox
 }
 from 'mdb-react-ui-kit';
-import { Navigate, Link } from "react-router-dom";
+// import { Navigate, Link } from "react-router-dom";
 import { userLogin, userSignup, userLogout } from '../actions/userAction';
 import Projects from '../pages/Projects';
+import Message from '../components/Message';
 
 function App() {
-  const [userId, setUserId] = useState(0);
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
+  const [userId, setUserId] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [signupForm, setSignupForm] = useState({
     email: '',
@@ -144,8 +145,7 @@ function App() {
       </MDBTabs>
       }
 
-      <div className="error">{ error }</div>
-      <div className="message">{ message }</div>
+      <Message error={error} message={message} />
 
       <MDBTabsContent>
 
