@@ -1,0 +1,6 @@
+en:
+  api:
+    errors:
+      not_found: "Not Found"
+      bad_request: "Bad request"
+      unauthorized: "Unauthorized"

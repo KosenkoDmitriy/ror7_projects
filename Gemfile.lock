@@ -90,10 +90,14 @@ GEM
     faker (3.1.0)
       i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
+    glob (0.4.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
+    i18n-js (4.2.2)
+      glob (>= 0.4.0)
+      i18n
     io-console (0.5.11)
     irb (1.4.2)
       reline (>= 0.3.0)
@@ -226,6 +230,7 @@ DEPENDENCIES
   devise (~> 4.8)
   factory_bot_rails
   faker
+  i18n-js
   jsonapi-serializer (~> 2.2)
   pg (~> 1.1)
   puma (~> 5.0)

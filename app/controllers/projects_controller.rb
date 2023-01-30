@@ -55,7 +55,7 @@ class ProjectsController < ApplicationController
     else
       # render :edit, status: :unprocessable_entity
       render json: {
-        status: {message: "Project couldn't be updated successfully. #{resource.errors.full_messages.to_sentence}"},
+        status: {message: "Project couldn't be updated successfully. #{@project.errors.full_messages.to_sentence}"},
       }, status: :unprocessable_entity
     end
   end
@@ -65,7 +65,7 @@ class ProjectsController < ApplicationController
     @project.destroy
     # redirect_to projects_url, notice: "Project was successfully destroyed."
     render json: {
-        status: {message: "Project was successfully destroyed.. #{resource.errors.full_messages.to_sentence}"},
+        status: {code: 200, message: "Project was successfully destroyed.. #{@project.errors.full_messages.to_sentence}"},
       }, status: :ok
   end
 
