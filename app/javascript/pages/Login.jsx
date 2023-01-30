@@ -11,7 +11,7 @@ import {
   MDBInput,
   MDBCheckbox
 }
-from 'mdb-react-ui-kit';
+  from 'mdb-react-ui-kit';
 // import { Navigate, Link } from "react-router-dom";
 import { userLogin, userSignup, userLogout } from '../actions/userAction';
 import Projects from '../pages/Projects';
@@ -51,12 +51,12 @@ function App() {
     const response = await userSignup(signupForm);
     notificationShow(response)
   };
-  
+
   const onSubmitLoginForm = async (e) => {
     if (e) e.preventDefault();
     notificationHide();
     const response = await userLogin(loginForm);
-    setUserId(response.data.id)
+    if (response.data) setUserId(response.data.id)
     notificationShow(response)
   };
 
@@ -66,16 +66,17 @@ function App() {
   }
 
   function notificationShow(response) {
-    if (response.ok || response.status && response.status.code == (200 || 201)) {
-      setMessage(response.message || response.status.message);
+    console.log('notificationShow', response)
+    const message = response.error || response.status.message;
+    if (response.ok || (response.status && response.status.code == (200 || 201))) {
+      setMessage(message);
       setIsLoggedIn(true);
       setJustifyActive('prjs')
-    } else if (response.error || response.status && response.status.code == 401) {
-      const message = response.error || response.status.message;
+    } else if (response.error || (response.status && response.status.code == 401)) {
       setError(message);
       setIsLoggedIn(false);
     } else {
-      setError(response.error || response.status.message);
+      setError(message);
     }
   }
 
@@ -91,7 +92,7 @@ function App() {
     setLoginForm(formNew)
   }
 
-  
+
   const onLogout = async (e) => {
     if (e) e.preventDefault();
     notificationHide();
@@ -111,38 +112,38 @@ function App() {
   // if (isLoggedIn) return <Navigate to='/projects' replace={true} />
   return (
     <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
-      { !isLoggedIn ?
+      {!isLoggedIn ?
 
-      <MDBTabs pills justify className='mb-3 d-flex flex-row justify-content-between'>
-        <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleJustifyClick('login')} active={justifyActive === 'login'}>
-            Login
-          </MDBTabsLink>
-        </MDBTabsItem>
-  
-        <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleJustifyClick('signup')} active={justifyActive === 'signup'}>
-            Register
-          </MDBTabsLink>
-        </MDBTabsItem>
-        
-      </MDBTabs>
-      :
-      <MDBTabs pills justify className='mb-3 d-flex flex-row justify-content-between'>
-        <MDBTabsItem>
-        {/* <Link to='/projects'> */}
-        <MDBTabsLink onClick={() => handleJustifyClick('prjs')} active={justifyActive === 'prjs'}>
-          Projects
-        </MDBTabsLink>
-        {/* </Link> */}
-        </MDBTabsItem>
+        <MDBTabs pills justify className='mb-3 d-flex flex-row justify-content-between'>
+          <MDBTabsItem>
+            <MDBTabsLink onClick={() => handleJustifyClick('login')} active={justifyActive === 'login'}>
+              Login
+            </MDBTabsLink>
+          </MDBTabsItem>
 
-        <MDBTabsItem>
-          <MDBTabsLink onClick={() => onLogout()} active={false}>
-            Logout
-          </MDBTabsLink>
-        </MDBTabsItem>
-      </MDBTabs>
+          <MDBTabsItem>
+            <MDBTabsLink onClick={() => handleJustifyClick('signup')} active={justifyActive === 'signup'}>
+              Register
+            </MDBTabsLink>
+          </MDBTabsItem>
+
+        </MDBTabs>
+        :
+        <MDBTabs pills justify className='mb-3 d-flex flex-row justify-content-between'>
+          <MDBTabsItem>
+            {/* <Link to='/projects'> */}
+            <MDBTabsLink onClick={() => handleJustifyClick('prjs')} active={justifyActive === 'prjs'}>
+              Projects
+            </MDBTabsLink>
+            {/* </Link> */}
+          </MDBTabsItem>
+
+          <MDBTabsItem>
+            <MDBTabsLink onClick={() => onLogout()} active={false}>
+              Logout
+            </MDBTabsLink>
+          </MDBTabsItem>
+        </MDBTabs>
       }
 
       <Message error={error} message={message} />
@@ -156,10 +157,10 @@ function App() {
           </div>
           <form onSubmit={onSubmitLoginForm}>
 
-          <MDBInput wrapperClass='mb-4' label='Email address' name='email' type='email' onChange={onUpdateLoginField}/>
-          <MDBInput wrapperClass='mb-4' label='Password' name='password' type='password' onChange={onUpdateLoginField}/>
+            <MDBInput wrapperClass='mb-4' label='Email address' name='email' type='email' onChange={onUpdateLoginField} />
+            <MDBInput wrapperClass='mb-4' label='Password' name='password' type='password' onChange={onUpdateLoginField} />
 
-          <MDBBtn className="mb-4 w-100">Sign in</MDBBtn>
+            <MDBBtn className="mb-4 w-100">Sign in</MDBBtn>
           </form>
         </MDBTabsPane>
 
@@ -168,16 +169,16 @@ function App() {
           <div className="text-center mb-3">
             <p>Sign up with:</p>
           </div>
-          <form onSubmit={(e) => {onSubmitSignupForm(e)}}>
-          <MDBInput wrapperClass='mb-4' label='Email' name='email' type='email' onChange={onUpdateSignupField}/>
-          <MDBInput wrapperClass='mb-4' label='Password' name='password' type='password' onChange={onUpdateSignupField}/>
-          <MDBInput wrapperClass='mb-4' label='Re-enter' name='password_confirmation' type='password' onChange={onUpdateSignupField}/>
+          <form onSubmit={(e) => { onSubmitSignupForm(e) }}>
+            <MDBInput wrapperClass='mb-4' label='Email' name='email' type='email' onChange={onUpdateSignupField} />
+            <MDBInput wrapperClass='mb-4' label='Password' name='password' type='password' onChange={onUpdateSignupField} />
+            <MDBInput wrapperClass='mb-4' label='Re-enter' name='password_confirmation' type='password' onChange={onUpdateSignupField} />
 
-          <div className='d-flex justify-content-center mb-4'>
-            <MDBCheckbox name='flexCheck' id='flexCheckDefault' label='I have read and agree to the terms' />
-          </div>
+            <div className='d-flex justify-content-center mb-4'>
+              <MDBCheckbox name='flexCheck' id='flexCheckDefault' label='I have read and agree to the terms' />
+            </div>
 
-          <MDBBtn type="submit" className="mb-4 w-100">Sign up</MDBBtn>
+            <MDBBtn type="submit" className="mb-4 w-100">Sign up</MDBBtn>
           </form>
         </MDBTabsPane>
 
