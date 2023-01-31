@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Sign up", type: :request do
     context 'create new user' do
-        let(:user_params) { {user: { email: 'test@email.com', password: 'pwd', password_confirmation: 'pwd' }} }
+        let(:user_params) { {user: { email: 'test@email.com', password: 'pwdpwd', password_confirmation: 'pwdpwd' }} }
 
         it 'successfully' do
             post '/sign_up', params: user_params#, headers: @headers

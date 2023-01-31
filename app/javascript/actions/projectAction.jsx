@@ -14,7 +14,7 @@ const projectDelete = async (projectId) => {
     body: json_data
   };
 
-  const res = await fetch(`/projects/${projectId}`, requestOptions).then(response => response.json())
+  const res = await fetch(`/projects/${projectId}`, requestOptions).then(response => response.json());
   return res;
 }
 
@@ -31,7 +31,7 @@ const projectCreate = async (form_data) => {
     body: json_data
   };
 
-  const res = await fetch("/projects", requestOptions).then(response => response.json())
+  const res = await fetch("/projects", requestOptions).then(response => response.json());
   return res;
 }
 
@@ -52,7 +52,7 @@ const projectUpdate = async (form_data) => {
     body: json_data
   };
 
-  const res = await fetch(`/projects/${form_data.id}`, requestOptions).then(response => response.json())
+  const res = await fetch(`/projects/${form_data.id}`, requestOptions).then(response => response.json());
   return res;
 }
 

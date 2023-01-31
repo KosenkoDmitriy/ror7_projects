@@ -13,14 +13,13 @@ import {
   MDBTable,
   MDBTableHead,
   MDBTableBody,
-}
-from 'mdb-react-ui-kit';
+} from 'mdb-react-ui-kit';
 import { projectCreate, projectDelete, projectUpdate } from '../actions/projectAction';
 import Message from '../components/Message';
 
 const Projects = () => {
-  const [error, setError] = useState('')
-  const [message, setMessage] = useState('')
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
 
   const [createModal, setCreateModal] = useState(false);
   const toggleShow = () => {
@@ -34,11 +33,8 @@ const Projects = () => {
     notificationHide();
   }
 
-  const [projectForm, setProjectForm] = useState({
-    title: ''
-  });
-
-  const [projectToEdit, setProjectToEdit] = useState({title:''});
+  const [projectForm, setProjectForm] = useState({ title: '' });
+  const [projectToEdit, setProjectToEdit] = useState({ title: '' });
 
   const [projects, setProjects] = useState({
     projects: []
@@ -58,7 +54,6 @@ const Projects = () => {
     const response = await projectCreate(projectForm);
     if (response.status.code == 200) {
       setMessage(response.status.message);
-      // setCreateModal(!createModal);
       setProjects([...projects, response.data]);
     } else {
       setError(response.status.message);
@@ -112,20 +107,21 @@ const Projects = () => {
 
   return (
     <MDBContainer className="p-1 my-0 d-flex flex-column w-100">
-      <MDBBtn className='w-50' onClick={toggleShow}>Add new project</MDBBtn>
+      <div className="d-flex justify-content-end">
+        <MDBBtn className='' onClick={toggleShow}>Add new project</MDBBtn>
+      </div>
       <MDBModal show={createModal} setShow={setCreateModal} tabIndex='-1'>
         <MDBModalDialog>
           <MDBModalContent>
           <form onSubmit={(e) => {onProjectCreateBtnClick(e)}}>
             <Message error={error} message={message} />
-
+            
             <MDBModalHeader>
               <MDBModalTitle>Modal title</MDBModalTitle>
               <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn>
             </MDBModalHeader>
 
             <MDBModalBody>
-              
               <MDBInput wrapperClass='mb-4' label='Project name' name='title' onChange={onChangeInputOfProjectCreateForm}/>
             </MDBModalBody>
 
@@ -135,12 +131,11 @@ const Projects = () => {
               </MDBBtn>
               <MDBBtn type='submit'>Submit</MDBBtn>
             </MDBModalFooter>
-
           </form>
-
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>
+
       <MDBModal show={editModal} setShow={setEditModal} tabIndex='-1'>
         <MDBModalDialog>
           <MDBModalContent>
@@ -166,9 +161,7 @@ const Projects = () => {
               </MDBBtn>
               <MDBBtn type='submit'>Submit</MDBBtn>
             </MDBModalFooter>
-
           </form>
-
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>
